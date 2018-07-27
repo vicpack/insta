@@ -41,7 +41,11 @@ export const UserType = new GraphQLObjectType({
 			 
          
           follings:{
-		  type:GraphQLList(GraphQLInt)
+		  type:new GraphQLList(UserType),
+		  resolve(user){
+			  const{follings} = user
+			  return Users.find({'_id':{$in:follings}}).exec()
+		  }
 	     },
 
 	     followers:{
@@ -90,4 +94,18 @@ export const UserInputType = new GraphQLInputObjectType({
 
 
     })
+});
+
+export const FollingsType = new GraphQLInputObjectType({
+	name:"addFollings",
+	description:"Agrega Seguidores",
+	fields:() => ({
+		_id:{
+			type:GraphQLNonNull(GraphQLID)
+		},
+		name:{
+			type:GraphQLString
+		}
+	})
 })
+
