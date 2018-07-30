@@ -43,7 +43,7 @@ app.get('/',(req,res) => {
 	res.send("Estoy funcionando");
 })
 //Middleware para proteger graphql
-/*app.use('/graphql',(req,res,next) => {
+app.use('/graphql',(req,res,next) => {
     const token = req.headers['authorization'];
     try{
             req.user = verifyToken(token) //le asgina el usuario de la base de datos
@@ -51,7 +51,7 @@ app.get('/',(req,res) => {
     }catch(error){
             res.status(401).json({message:error.message})
     }
-})*/
+})
 app.use('/graphql',graphQLHTTP((req,res)=>({
     schema,
     graphiql:true, //cliente de graphql , abre el navegador
